@@ -7,6 +7,7 @@ use Couchbase\Role;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -64,11 +65,15 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn (string|null $value, array $attributes) => Str::title($attributes['first_name'].' '.$attributes['last_name']),
         );
-
     }
 
     public function role(): BelongsTo
     {
         return $this->belongsTo(\App\Models\Role::class);
+    }
+
+    public function addresses(): MorphMany
+    {
+        return $this->morphMany(Address::class, 'addressable');
     }
 }
