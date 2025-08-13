@@ -19,6 +19,7 @@ class DriverFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create()->id,
+            'city_id' => City::factory()->create()->id,
             'driver_license_expiry_date' => now()->addYears(rand(1, 5))->toDateTimeString(),
             'vehicle_make' => $this->getVehicleMakeModel()['make']??null,
             'vehicle_model' => $this->getVehicleMakeModel()['model']??null,
