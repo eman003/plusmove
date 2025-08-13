@@ -11,11 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-
+        /*
+         *
+         * A driver could have multiple vehicles which would require a separate table.
+         * But I think that's beyond the scope of this project.
+         *
+         */
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(App\Models\Vehicle::class);
+            $table->string('vehicle_make');
+            $table->string('vehicle_model');
+            $table->string('vehicle_colour');
+            $table->string('vehicle_registration_number')->unique();
             $table->timestamp('driver_license_expiry_date');
             $table->softDeletes();
             $table->timestamps();
