@@ -36,9 +36,9 @@ class Driver extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function vehicle(): BelongsTo
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(City::class);
     }
 
     public function deliveries(): HasMany
