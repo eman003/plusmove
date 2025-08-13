@@ -17,7 +17,10 @@ class Driver extends Model
     protected $fillable = [
         'user_id',
         'driver_license_expiry_date',
-        'vehicle_id',
+        'vehicle_make',
+        'vehicle_model',
+        'vehicle_colour',
+        'vehicle_registration_number',
     ];
 
     protected function casts(): array
