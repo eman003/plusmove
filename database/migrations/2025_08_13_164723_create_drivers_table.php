@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+
+        Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->unsignedInteger('status');
+            $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Vehicle::class);
+            $table->timestamp('driver_license_expiry_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('drivers');
     }
 };
