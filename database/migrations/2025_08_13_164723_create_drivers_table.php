@@ -19,8 +19,8 @@ return new class extends Migration
          */
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(App\Models\City::class)->nullable();
+            $table->foreignIdFor(App\Models\V1\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\V1\City::class)->nullable();
             $table->string('vehicle_make');
             $table->string('vehicle_model');
             $table->string('vehicle_colour');
