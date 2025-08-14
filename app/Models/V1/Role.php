@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\V1;
 
-use App\StatusEnum;
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

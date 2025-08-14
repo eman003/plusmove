@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\V1;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Couchbase\Role;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +14,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\V1\UserFactory> */
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
@@ -57,19 +56,9 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * get the full name of the user.
-     */
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string|null $value, array $attributes) => Str::title($attributes['first_name'].' '.$attributes['last_name']),
-        );
-    }
-
     public function role(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function addresses(): MorphMany
