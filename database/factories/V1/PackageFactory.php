@@ -3,8 +3,8 @@
 namespace Database\Factories\V1;
 
 use App\Enums\DeliveryStatusEnum;
-use App\Models\Customer;
-use App\Models\Delivery;
+use App\Models\V1\Customer;
+use App\Models\V1\Delivery;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
