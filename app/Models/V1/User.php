@@ -56,6 +56,15 @@ class User extends Authenticatable
         ];
     }
 
+    public function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => Str::title(
+                $attributes['first_name'].' '.$attributes['last_name']
+            )
+        );
+    }
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);

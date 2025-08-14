@@ -20,12 +20,12 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Models\V1\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(App\Models\V1\City::class)->nullable();
+            //$table->foreignIdFor(App\Models\V1\City::class)->nullable();
             $table->string('vehicle_make');
             $table->string('vehicle_model');
             $table->string('vehicle_colour');
             $table->string('vehicle_registration_number')->unique();
-            $table->timestamp('driver_license_expiry_date');
+            $table->timestamp('driver_license_expires_at');
             $table->softDeletes();
             $table->timestamps();
         });

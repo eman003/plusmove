@@ -27,10 +27,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => new UserResource($user->refresh()),
-        ], 201);
+        return new UserResource($user->refresh());
     }
 
     /**
@@ -48,10 +45,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user' => new UserResource($user->refresh()),
-        ]);
+        return new UserResource($user->refresh());
     }
 
     /**
