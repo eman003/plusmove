@@ -16,8 +16,8 @@ class Driver extends Model
 
     protected $fillable = [
         'user_id',
-        'city_id',
-        'driver_license_expiry_date',
+        //'city_id',
+        'driver_license_expires_at',
         'vehicle_make',
         'vehicle_model',
         'vehicle_colour',
@@ -27,7 +27,7 @@ class Driver extends Model
     protected function casts(): array
     {
         return [
-            'driver_license_expiry_date' => 'datetime'
+            'driver_license_expires_at' => 'datetime'
         ];
     }
 

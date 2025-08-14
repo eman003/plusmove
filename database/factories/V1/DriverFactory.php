@@ -2,7 +2,8 @@
 
 namespace Database\Factories\V1;
 
-use App\Models\User;
+use App\Models\V1\City;
+use App\Models\V1\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,12 +18,13 @@ class DriverFactory extends Factory
      */
     public function definition(): array
     {
+        $makeModel = $this->getVehicleMakeModel();
         return [
             'user_id' => User::factory()->create()->id,
-            'city_id' => City::factory()->create()->id,
-            'driver_license_expiry_date' => now()->addYears(rand(1, 5))->toDateTimeString(),
-            'vehicle_make' => $this->getVehicleMakeModel()['make']??null,
-            'vehicle_model' => $this->getVehicleMakeModel()['model']??null,
+            //'city_id' => City::factory()->create()->id,
+            'driver_license_expires_at' => now()->addYears(rand(1, 5))->toDateTimeString(),
+            'vehicle_make' => $makeModel['make']??null,
+            'vehicle_model' => $makeModel['model']??null,
             'vehicle_colour' => fake()->colorName(),
             'vehicle_registration_number' => $this->generateNumberPlate(),
         ];
@@ -47,18 +49,18 @@ class DriverFactory extends Factory
             'Opel' => ['Combo Cargo'],
         ];
 
-        $vehicleMake = fake()->randomElement(array_keys($vehicleModelsByMake));
+        $vehicleMake = array_rand($vehicleModelsByMake);
 
         return [
             'make' => $vehicleMake,
-            'model' => fake()->randomElement($vehicleModelsByMake[$vehicleMake])
+            'model' => $vehicleModelsByMake[$vehicleMake][rand(0, count($vehicleModelsByMake[$vehicleMake]) - 1)],
         ];
     }
 
     private function generateNumberPlate(): string
     {
         return fake()->unique()->regexify(fake()->randomElement([
-            '[A-Z]{3} ?\d{3} ?(GP|L|MP|NW|FS|NC|EC)', // e.g., ABC 123 GP
+            '^[A-Z]{2} [0-9]{2} [A-Z]{2} (GP|LP|MP|NW|FS|NC|EC)$', // e.g., ABC 123 GP
             'ND \d{3}-\d{3}', // KZN Durban
             '(CA|CF|CJ|CK|CL|CN|CS|CT|CY|CW|CZ) \d{3}-\d{3}', // Western Cape prefixes
         ]));
