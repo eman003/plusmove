@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\DeliveryStatusEnum;
 use App\Models\V1\Customer;
 use App\Models\V1\Delivery;
 use App\Models\V1\Package;
@@ -15,9 +16,27 @@ class PackageSeeder extends Seeder
      */
     public function run(): void
     {
-        Package::factory()->count(rand(10, 50))->create([
-            'customer_id' => fake()->randomElement(Customer::all()->pluck('id')->toArray()),
-            'delivery_id' => fake()->randomElement([...Delivery::all()->pluck('id')->toArray(), null]),
-        ]);
+        $customers = Customer::with('addresses')->get();
+
+        Package::factory()
+            ->count(rand(10, 50))
+            ->state(function () use ($customers) {
+                $customer = $customers->random();
+
+                return [
+                    'customer_id'  => $customer->id,
+                    'address_id'   => optional($customer->addresses->random())->id,
+                    'delivery_id'  => null,
+                    'status'       => $status = fake()->randomElement(DeliveryStatusEnum::cases())->value,
+                    'cancelled_at' => $status === DeliveryStatusEnum::CANCELLED->value
+                        ? now()->subHours(rand(1, 24))
+                        : null,
+                    'delivered_at' => $status === DeliveryStatusEnum::DELIVERED->value
+                        ? now()->subHours(rand(1, 24))
+                        : null,
+                ];
+            })
+            ->create();
+
     }
 }

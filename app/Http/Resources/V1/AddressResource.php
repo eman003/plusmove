@@ -26,7 +26,6 @@ class AddressResource extends ResourceCollection
             'postal_code' => $this->postal_code,
             'country' => $this->country,
             'created_at' => $this->created_at?->diffForHumans(),
-            'updated_at' => $this->updated_at?->diffForHumans()
         ];
     }
 }

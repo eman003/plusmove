@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Models\V1\Driver::class)->nullable();
-            $table->unsignedInteger('status');
-            $table->timestamp('delivered_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

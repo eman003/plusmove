@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email')->unique();
-            $table->softDeletes();
+            $table->foreignIdFor(App\Models\V1\Driver::class);
+            $table->UnsignedInteger('delivered');
+            $table->UnsignedInteger('cancelled');
+            $table->UnsignedInteger('failed');
+            $table->UnsignedInteger('returned');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('reports');
     }
 };
