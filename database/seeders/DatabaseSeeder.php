@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DriverSeeder::class,
             CustomerSeeder::class,
+            DeliverySeeder::class,
         ]);
     }
 }

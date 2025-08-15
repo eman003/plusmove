@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(App\Models\V1\Driver::class)->nullable();
             $table->unsignedInteger('status');
+            $table->uuid('tracking_number')->unique()->default(DB::raw('(uuid())'));
+            $table->mediumText('delivery_note')->nullable();
             $table->timestamp('delivered_at')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
