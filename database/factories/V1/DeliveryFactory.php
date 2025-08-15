@@ -18,13 +18,8 @@ class DeliveryFactory extends Factory
      */
     public function definition(): array
     {
-        $status = fake()->randomElement(DeliveryStatusEnum::cases())->value;
         return [
             'driver_id' => Driver::factory()->create()->id,
-            'status' => $status,
-            'delivered_at' => $status === DeliveryStatusEnum::DELIVERED->value ? now()->subHours(rand(1,24)) : null,
-            'cancelled_at' => $status === DeliveryStatusEnum::CANCELLED->value ? now()->subHours(rand(1,24)) : null,
-            'delivery_note' => $status === DeliveryStatusEnum::FAILED->value ? fake()->sentence() : null,
         ];
     }
 }

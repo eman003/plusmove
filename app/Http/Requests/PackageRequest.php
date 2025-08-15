@@ -6,7 +6,7 @@ use App\Enums\DeliveryStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DeliveryRequest extends FormRequest
+class PackageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class DeliveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_id' => ['required', Rule::exists('drivers', 'id')],
-            //'status' => ['required', Rule::enum(DeliveryStatusEnum::class)],
+            'customer_id' => ['required', Rule::exists('customers', 'id')],
+            'status' => ['required', Rule::enum(DeliveryStatusEnum::class)],
+            'delivery_note' => ['nullable', 'string'],
         ];
     }
 }

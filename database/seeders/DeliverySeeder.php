@@ -15,6 +15,9 @@ class DeliverySeeder extends Seeder
     public function run(): void
     {
         $drivers = Driver::all();
-        Delivery::factory()->count(rand(10, 50))->create(['driver_id' => fake()->randomElement($drivers)->id]);
+        Delivery::factory()
+            ->count(rand(10, 50))
+            ->state(fn () => ['driver_id' => $drivers->random()->id])
+            ->create();
     }
 }

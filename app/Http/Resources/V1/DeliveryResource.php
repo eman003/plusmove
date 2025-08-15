@@ -18,11 +18,6 @@ class DeliveryResource extends JsonResource
         return [
             'id' => $this->id,
             'driver' => $this->driver?->user?->full_name,
-            'status' => Str::of($this->status?->name)->replace('_', ' ')->title(),
-            'delivery_note' => $this->delivery_note,
-            'tracking_number' => $this->tracking_number,
-            'delivered_at' => $this->delivered_at?->toDateTimeString(),
-            'cancelled_at' => $this->cancelled_at?->toDateTimeString(),
             'packages' => $this->packages
         ];
     }

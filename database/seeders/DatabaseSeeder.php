@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DriverSeeder::class,
             CustomerSeeder::class,
             DeliverySeeder::class,
+            PackageSeeder::class,
         ]);
     }
 }

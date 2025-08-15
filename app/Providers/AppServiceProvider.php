@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Faker\AddressElement;
+use App\Models\V1\Package;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::automaticallyEagerLoadRelationships();
         Model::preventLazyLoading(!app()->isProduction());
+
+        Package::observe(\App\Observers\PackageObserver::class);
     }
 }

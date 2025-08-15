@@ -20,7 +20,6 @@ class Delivery extends Model
     protected $fillable = [
         'driver_id',
         'status',
-        'delivered_at',
         'cancelled_at',
         'delivery_note',
         'tracking_number'
@@ -29,17 +28,8 @@ class Delivery extends Model
     protected function casts(): array
     {
         return [
-            'delivered_at' => 'datetime',
-            'cancelled_at' => 'datetime',
             'status' => DeliveryStatusEnum::class,
         ];
-    }
-
-    protected static function booted()
-    {
-        static::creating(function ($delivery) {
-            $delivery->tracking_number = Str::uuid();
-        });
     }
 
     public function trackingNumber(): Attribute

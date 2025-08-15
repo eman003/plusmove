@@ -24,9 +24,4 @@ class CustomerResource extends JsonResource
             'addresses' => $this->addresses,
         ];
     }
-
-    private function getAddresses(): Collection
-    {
-        return $this->addresses?->map(fn($address) => new AddressResource($address));
-    }
 }
