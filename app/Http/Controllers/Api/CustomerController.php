@@ -15,7 +15,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::latest('id')->paginate(15)->withQueryString();
+        $customers = Customer::with('addresses')->latest('id')->paginate(15)->withQueryString();
+
+        return $customers;
 
         return CustomerResource::collection($customers);
     }
@@ -27,7 +29,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::create($request->validated());
 
-        return new CustomerResource($customer->refresh());
+        return new CustomerResource($customer->refresh()->loadMissing('addresses'));
     }
 
     /**
@@ -35,7 +37,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return new CustomerResource($customer);
+        return new CustomerResource($customer->loadMissing('addresses'));
     }
 
     /**
@@ -45,7 +47,7 @@ class CustomerController extends Controller
     {
         $customer->update($request->validated());
 
-        return new CustomerResource($customer->refresh());
+        return new CustomerResource($customer->refresh()->loadMissing('addresses'));
     }
 
     /**

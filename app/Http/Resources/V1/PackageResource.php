@@ -23,7 +23,7 @@ class PackageResource extends JsonResource
             'delivery_note' => $this->delivery_note,
             'delivered_at' => $this->delivered_at?->toDateString(),
             'cancelled_at' => $this->cancelled_at?->toDateString(),
-            'delivery_address' => $this->address,
+            'delivery_address' => new AddressResource($this->whenLoaded('address')),
         ];
     }
 }

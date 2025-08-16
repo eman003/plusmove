@@ -2,7 +2,6 @@
 
 namespace Database\Factories\V1;
 
-use App\Models\V1\City;
 use App\Models\V1\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,8 +19,7 @@ class DriverFactory extends Factory
     {
         $makeModel = $this->getVehicleMakeModel();
         return [
-            'user_id' => User::factory()->create()->id,
-            //'city_id' => City::factory()->create()->id,
+            'user_id' => User::factory(),
             'driver_license_expires_at' => now()->addYears(rand(1, 5))->toDateTimeString(),
             'vehicle_make' => $makeModel['make']??null,
             'vehicle_model' => $makeModel['model']??null,

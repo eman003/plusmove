@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\PackageDeliveryStatus;
+use App\Events\PackageDeliveryStatusEvent;
 use App\Models\V1\Package;
 use App\Notifications\DeliveryStatusNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +22,7 @@ class SendPackageDeliveryStatusNotification
     /**
      * Handle the event.
      */
-    public function handle(PackageDeliveryStatus $event): void
+    public function handle(PackageDeliveryStatusEvent $event): void
     {
         $email = $event->package?->customer?->email;
 

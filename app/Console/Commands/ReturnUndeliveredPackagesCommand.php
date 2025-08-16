@@ -8,6 +8,7 @@ use App\Models\V1\Package;
 use App\Models\V1\Report;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ReturnUndeliveredPackagesCommand extends Command
 {
@@ -38,42 +39,23 @@ class ReturnUndeliveredPackagesCommand extends Command
 
     private function generateReport(): void
     {
-        $selects = [
-            'deliveries.driver_id',
-            DB::raw('COUNT(*) AS total_count'),
-        ];
+        Package::whereDate('scheduled_for', now())
+            ->where('status', '!=', DeliveryStatusEnum::DELIVERED)
+            ->update(['status' => DeliveryStatusEnum::RETURNED]);
 
-        $enumValues = [];
-        foreach (DeliveryStatusEnum::cases() as $status) {
-            $value = addslashes($status->value);
-            $alias = strtolower($status->name) . '_count';
-            $selects[] = DB::raw("SUM(CASE WHEN packages.status = '{$value}' THEN 1 ELSE 0 END) AS {$alias}");
-            $enumValues[] = "'{$value}'";
-        }
+        $today = now()->toDateString();
 
-        $notInList = implode(',', $enumValues);
-        $selects[] = DB::raw("SUM(CASE WHEN packages.status NOT IN ({$notInList}) THEN 1 ELSE 0 END) AS unknown_count");
+        Driver::with(['user:id,first_name,last_name'])->withCount([
+            'packages as packages_returned_count' => fn ($q) => $q->whereDate('scheduled_for', $today)->where('status', DeliveryStatusEnum::RETURNED),
+            'packages as delivered_packages_count' => fn ($q) => $q->whereDate('scheduled_for', $today)->where('status', DeliveryStatusEnum::DELIVERED),
+        ])->orderBy('packages_returned_count', 'DESC')
+            ->cursor()
+            ->each(fn ($d) => Report::create([
+                'driver_id' => $d->id,
+                'packages_returned' => $d->packages_returned_count,
+                'packages_delivered' => $d->delivered_packages_count,
+            ]));
 
 
-        $notInList = implode(',', $enumValues);
-        $selects[] = DB::raw("SUM(CASE WHEN packages.status NOT IN ({$notInList}) THEN 1 ELSE 0 END) AS unknown_count");
-
-        $rows =  Package::query()
-            ->join('deliveries', 'deliveries.id', '=', 'packages.delivery_id')
-            ->select($selects)
-            ->whereDate('packages.updated_at', now()->toDateString())
-            ->groupBy('deliveries.driver_id')
-            ->orderBy('deliveries.driver_id')
-            ->get();
-
-        foreach ($rows as $row) {
-            Report::create([
-                'driver_id' => $row->driver_id,
-                'delivered' => $row->delivered_count,
-                'returned' => $row->returned_count,
-                'cancelled' => $row->cancelled_count,
-                'failed' => $row->failed_count,
-            ]);
-        }
     }
 }

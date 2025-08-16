@@ -21,6 +21,13 @@ class Customer extends Model
         'email',
     ];
 
+    protected static function booted(): void
+    {
+        static::deleting(function ($customer) {
+            $customer->addresses()->delete();
+        });
+    }
+
     public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');

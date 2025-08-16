@@ -9,10 +9,9 @@ class Report extends Model
 {
     protected $fillable = [
         'driver_id',
-        'delivered',
-        'returned',
-        'cancelled',
-        'failed',
+        'packages_delivered',
+        'packages_returned',
+        'packages_total',
     ];
 
     public function driver(): BelongsTo

@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'created_at' => $this->created_at?->diffForHumans(),
             'updated_at' => $this->updated_at?->diffForHumans(),
-            'addresses' => $this->addresses,
+            'addresses' => AddressResource::collection($this->whenLoaded('addresses')),
         ];
     }
 }

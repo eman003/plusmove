@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Faker\AddressElement;
 use App\Models\V1\Package;
+use App\Utilities\LeastLoadedDriver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('address', function () {
             return new AddressElement();
+        });
+
+        $this->app->singleton('driver', function () {
+            return new LeastLoadedDriver();
         });
 
     }

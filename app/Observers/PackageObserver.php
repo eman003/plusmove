@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Enums\DeliveryStatusEnum;
-use App\Events\PackageDeliveryStatus;
+use App\Events\MissingAddressEvent;
+use App\Events\PackageDeliveryStatusEvent;
+use App\Facades\AssignDriver;
 use App\Models\V1\Delivery;
 use App\Models\V1\Driver;
 use App\Models\V1\Package;
@@ -17,55 +19,21 @@ class PackageObserver
     public function created(Package $package): void
     {
 
-        DB::transaction(function () use ($package,) {
-            $inactiveStatuses = [
-                DeliveryStatusEnum::DELIVERED->value,
-                DeliveryStatusEnum::CANCELLED->value,
-                DeliveryStatusEnum::RETURNED->value,
-                DeliveryStatusEnum::FAILED->value,
-            ];
+        DB::transaction(function () use ($package) {
+            $customer_address = $package->customer?->addresses;
 
-            // Subquery: pick one open delivery for each driver (deterministic order)
-            $openDeliveryIdSub = Delivery::query()
-                ->select('id')
-                ->whereColumn('deliveries.driver_id', 'drivers.id')
-                ->orderBy('id')
-                ->limit(1);
-
-            // Main query: least active packages + include open_delivery_id
-            $driverRow = Driver::query()
-                ->select('drivers.id')
-                ->selectSub($openDeliveryIdSub, 'open_delivery_id')
-                ->withCount([
-                    'packages as active_packages_count' => fn ($q) =>
-                    $q->whereNotIn('status', $inactiveStatuses),
-                ])
-                ->orderBy('active_packages_count')
-                ->orderBy('drivers.id')
-                ->lockForUpdate() // avoid race when multiple packages are created concurrently
-                ->first();
-
-            if (! $driverRow) {
-                // No drivers available; nothing to assign
-                return;
-            }
-
-            $openDeliveryId = $driverRow->open_delivery_id;
-
-            if (! $openDeliveryId) {
-                // Create a new open delivery for this driver
-                $newDelivery = Delivery::create([
-                    'driver_id' => $driverRow->id,
+            if ($customer_address->isNotEmpty())
+            {
+                $package->update([
+                    'driver_id' => AssignDriver::getDriverWithLeastPackages()?->id,
+                    'address_id' => $customer_address?->random()?->id,
                 ]);
-                $openDeliveryId = $newDelivery->id;
+            }else{
+                MissingAddressEvent::dispatch($package);
             }
-
-            $package->update([
-                'delivery_id' => $openDeliveryId,
-                'address_id' => $package->customer?->addresses?->random()?->id,
-            ]);
         });
 
+        PackageDeliveryStatusEvent::dispatch($package);
     }
 
     /**
@@ -73,7 +41,12 @@ class PackageObserver
      */
     public function updated(Package $package): void
     {
-        PackageDeliveryStatus::dispatch($package);
+        if ($package->wasChanged('status')){
+            if ($package->status == DeliveryStatusEnum::DELIVERED->value)
+                $package->update(['delivered_at' => now()]);
+
+            PackageDeliveryStatusEvent::dispatch($package);
+        }
     }
 
     /**

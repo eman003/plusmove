@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Models\V1\Driver::class);
-            $table->UnsignedInteger('delivered');
-            $table->UnsignedInteger('cancelled');
-            $table->UnsignedInteger('failed');
-            $table->UnsignedInteger('returned');
+            $table->UnsignedInteger('packages_delivered');
+            $table->UnsignedInteger('packages_returned');
             $table->timestamps();
         });
     }
