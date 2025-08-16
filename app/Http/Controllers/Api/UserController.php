@@ -15,7 +15,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(15)->withQueryString();
+        $users = User::with('addresses')
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
 
         return UserResource::collection($users);
     }
@@ -27,7 +30,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return new UserResource($user->refresh());
+        return new UserResource($user->refresh()->loadMissing('addresses'));
     }
 
     /**
@@ -35,7 +38,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return new UserResource($user->loadMissing('addresses'));
     }
 
     /**
@@ -45,7 +48,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        return new UserResource($user->refresh());
+        return new UserResource($user->refresh()->loadMissing('addresses'));
     }
 
     /**
@@ -53,7 +56,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $user->cascade()->delete();
 
         return response()->json([
             'message' => 'User deleted successfully'

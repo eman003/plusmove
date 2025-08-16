@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'phone_number' => ['required', 'string', 'min:10', 'max:15'],
             'email' => ['required', 'email', 'max:190', Rule::unique('users', 'email')->ignore(optional($this->route('user'))->id)],
             'role_id' => ['required', Rule::exists('roles', 'id')],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'], //require password_confirmation field to pass validation
         ];
     }
 }

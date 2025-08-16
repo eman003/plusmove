@@ -3,10 +3,10 @@
 namespace App\Models\V1;
 
 use App\Enums\DeliveryStatusEnum;
-use App\Events\PackageDeliveryStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -23,13 +23,14 @@ class Package extends Model
         'status',
         'delivery_note',
         'delivered_at',
-        'cancelled_at',
+        'scheduled_for',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         static::creating(function ($package) {
             $package->tracking_number = Str::uuid();
+            //$package->status = DeliveryStatusEnum::NEW;
         });
     }
 
@@ -45,21 +46,21 @@ class Package extends Model
         return [
             'status' => DeliveryStatusEnum::class,
             'delivered_at' => 'datetime',
-            'cancelled_at' => 'datetime',
+            'scheduled_for' => 'datetime',
         ];
     }
 
-    public function customer()
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class);
+    }
+
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function delivery()
-    {
-        return $this->belongsTo(Delivery::class);
-    }
-
-    public function address()
+    public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
     }

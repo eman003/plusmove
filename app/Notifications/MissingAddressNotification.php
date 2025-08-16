@@ -7,16 +7,15 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Str;
 
-class DeliveryStatusNotification extends Notification implements ShouldQueue
+class MissingAddressNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Package $package)
+    public function __construct(private Package $package)
     {
         //
     }
@@ -37,9 +36,11 @@ class DeliveryStatusNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Your package is '.Str::of($this->package->status->name)->replace('_', ' ')->title())
-            ->line('Your package is currently '.Str::of($this->package->status->name)->replace('_', ' ')->title())
-            ->line('Tracking number'.$this->package->tracking_number)
+            ->subject('Your package is missing an address '.$this->package->tracking_number)
+            ->greeting('Hi '.$this->package?->customer?->name.',')
+            ->line('Your package is missing an address.')
+            ->line('Please contact us to update your address.')
+            ->line('Tracking number: '.$this->package->tracking_number)
             ->line('Thank you for choosing us!');
     }
 

@@ -58,6 +58,14 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::deleting(function ($user) {
+            $user->addresses()->delete();
+        });
+    }
+
+
     public function fullName(): Attribute
     {
         return Attribute::make(

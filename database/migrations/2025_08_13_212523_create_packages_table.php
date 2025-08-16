@@ -2,7 +2,7 @@
 
 use App\Models\V1\Address;
 use App\Models\V1\Customer;
-use App\Models\V1\Delivery;
+use App\Models\V1\Driver;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,13 +17,13 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Delivery::class)->nullable();
+            $table->foreignIdFor(Driver::class)->nullable();
             $table->foreignIdFor(Address::class)->nullable();
-            $table->unsignedInteger('status');
-            $table->uuid('tracking_number')->unique()->default(DB::raw('(uuid())'));
+            $table->unsignedInteger('status')->nullable();
+            $table->uuid('tracking_number')->unique();
             $table->mediumText('delivery_note')->nullable();
+            $table->timestamp('scheduled_for')->nullable();
             $table->timestamp('delivered_at')->nullable();
-            $table->timestamp('cancelled_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ class CustomerResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'joined' => $this->created_at?->diffForHumans(),
-            'addresses' => $this->addresses,
+            'customer_addresses' => AddressResource::collection($this->whenLoaded('addresses')),
         ];
     }
 }

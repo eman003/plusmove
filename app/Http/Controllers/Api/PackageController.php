@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageRequest;
 use App\Http\Resources\V1\PackageResource;
 use App\Models\V1\Package;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Symfony\Component\HttpFoundation\Response;
 
 class PackageController extends Controller
 {
@@ -17,7 +14,12 @@ class PackageController extends Controller
      */
     public function index()
     {
-        return PackageResource::collection(Package::latest('id')->paginate(15)->withQueryString());
+        $packages = Package::with('customer', 'driver', 'address')
+            ->latest('id')
+            ->paginate(15)
+            ->withQueryString();
+
+        return PackageResource::collection($packages);
     }
 
     /**
@@ -27,7 +29,7 @@ class PackageController extends Controller
     {
         $package = Package::create($request->validated());
 
-        return new PackageResource($package);
+        return new PackageResource($package->loadMissing('customer', 'driver', 'address'));
     }
 
     /**
@@ -35,7 +37,7 @@ class PackageController extends Controller
      */
     public function show(Package $package)
     {
-        return new PackageResource($package);
+        return new PackageResource($package->loadMissing('customer', 'driver', 'address'));
     }
 
     /**
@@ -45,7 +47,7 @@ class PackageController extends Controller
     {
         $package->update($request->validated());
 
-        return new PackageResource($package);
+        return new PackageResource($package->loadMissing('customer', 'driver', 'address'));
     }
 
     /**
