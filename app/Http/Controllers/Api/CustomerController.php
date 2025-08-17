@@ -25,7 +25,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
-        $customer = Customer::create($request->validated());
+        $customer = Customer::create($request->validated($request->all()));
 
         return new CustomerResource($customer->refresh()->loadMissing('addresses'));
     }
@@ -43,7 +43,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
-        $customer->update($request->validated());
+        $customer->update($request->validated($request->all()));
 
         return new CustomerResource($customer->refresh()->loadMissing('addresses'));
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +24,7 @@ class AuthController extends Controller
                 Response::HTTP_UNAUTHORIZED);
         }
 
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+        $token = $user->createToken($user->full_name.'-AuthToken')->plainTextToken;
         return response()->json([
             'access_token' => $token,
         ]);
