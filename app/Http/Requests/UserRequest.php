@@ -32,10 +32,6 @@ class UserRequest extends FormRequest
             'role_id' => ['required', Rule::exists('roles', 'id')],
         ];
 
-        if ($this->method() === 'POST') {
-            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
-        }
-
         if (($this->method() === 'PATCH' || $this->method() === 'PUT') && auth()->user()->isDriver()) {
             unset($rules['role_id']);
         }

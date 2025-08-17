@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\DeliveryStatusEnum;
 use App\Models\V1\Package;
 use App\Models\V1\User;
 use Illuminate\Auth\Access\Response;
@@ -41,7 +42,9 @@ class PackagePolicy
      */
     public function update(User $user, Package $package): bool
     {
-        return $user->isDriver() && $user->is($package->driver?->user);
+        return $user->isDriver()
+            && $user->is($package->driver?->user)
+            && $package->status !== DeliveryStatusEnum::DELIVERED;
     }
 
     /**
