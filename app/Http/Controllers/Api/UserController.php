@@ -7,14 +7,18 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\V1\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        Gate::authorize('viewAny', User::class);
+
         $users = User::with('addresses')
             ->latest()
             ->paginate(15)
@@ -38,6 +42,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        Gate::authorize('view', $user);
+
         return new UserResource($user->loadMissing('addresses'));
     }
 
@@ -56,6 +62,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        Gate::authorize('delete', User::class);
         $user->tokens()->delete();
         $user->addresses()->delete();
         $user->delete();

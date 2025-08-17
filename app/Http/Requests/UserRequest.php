@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\V1\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
@@ -12,7 +14,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('create', User::class) || Gate::allows('update', $this->route('user'));
     }
 
     /**
@@ -22,13 +24,22 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'first_name' => ['required', 'string', 'max:190'],
             'last_name' => ['required', 'string', 'max:190'],
             'phone_number' => ['required', 'string', 'min:10', 'max:15'],
             'email' => ['required', 'email', 'max:190', Rule::unique('users', 'email')->ignore(optional($this->route('user'))->id)],
             'role_id' => ['required', Rule::exists('roles', 'id')],
-            'password' => ['required', 'string', 'min:8', 'confirmed'], //require password_confirmation field to pass validation
         ];
+
+        if ($this->method() === 'POST') {
+            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
+        }
+
+        if (($this->method() === 'PATCH' || $this->method() === 'PUT') && auth()->user()->isDriver()) {
+            unset($rules['role_id']);
+        }
+
+        return $rules;
     }
 }

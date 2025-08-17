@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Resources\V1\CustomerResource;
 use App\Models\V1\Customer;
+use App\Models\V1\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CustomerController extends Controller
 {
@@ -15,6 +17,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Customer::class);
+
         $customers = Customer::with('addresses')->latest('id')->paginate(15)->withQueryString();
 
         return CustomerResource::collection($customers);
@@ -25,7 +29,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
-        $customer = Customer::create($request->validated($request->all()));
+        $customer = Customer::create($request->validated());
 
         return new CustomerResource($customer->refresh()->loadMissing('addresses'));
     }
@@ -35,6 +39,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        Gate::authorize('view', $customer);
         return new CustomerResource($customer->loadMissing('addresses'));
     }
 
@@ -43,6 +48,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
+        Gate::authorize('update', $customer);
         $customer->update($request->validated($request->all()));
 
         return new CustomerResource($customer->refresh()->loadMissing('addresses'));
@@ -53,6 +59,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        Gate::authorize('delete', $customer);
         $customer->addresses()->delete();
         $customer->delete();
 

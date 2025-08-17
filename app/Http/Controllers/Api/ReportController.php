@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ReportResource;
 use App\Models\V1\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReportController extends Controller
 {
     public function __invoke(){
+        Gate::authorize('reports', Report::class);
         $reports = Report::whereDate('created_at', now()->toDateString())->paginate(15);
 
         return ReportResource::collection($reports);
