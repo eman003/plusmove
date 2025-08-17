@@ -7,6 +7,7 @@ use App\Http\Requests\DriverRequest;
 use App\Http\Resources\V1\DriverResource;
 use App\Models\V1\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DriverController extends Controller
 {
@@ -15,6 +16,8 @@ class DriverController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Driver::class);
+
         $drivers = Driver::latest('id')->paginate(15)->withQueryString();
 
         return DriverResource::collection($drivers);
@@ -35,6 +38,7 @@ class DriverController extends Controller
      */
     public function show(Driver $driver)
     {
+        Gate::authorize('view', $driver);
         return new DriverResource($driver);
     }
 
@@ -53,6 +57,8 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
+        Gate::authorize('delete', $driver);
+
         $driver->delete();
 
         return response()->json([

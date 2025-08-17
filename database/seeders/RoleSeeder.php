@@ -28,13 +28,6 @@ class RoleSeeder extends Seeder
                 'status' => StatusEnum::ACTIVE,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'name' => 'Customer',
-                'description' => 'It gives you access to view your own packages status.',
-                'status' => StatusEnum::INACTIVE,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
         ]);
     }

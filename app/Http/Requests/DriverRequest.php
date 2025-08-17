@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\V1\Driver;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class DriverRequest extends FormRequest
@@ -12,7 +14,7 @@ class DriverRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('create', Driver::class) || Gate::allows('update', $this->route('driver'));
     }
 
     /**
@@ -23,7 +25,7 @@ class DriverRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', Rule::exists('users', 'id')],
+            'user_id' => ['required', Rule::unique('drivers', 'user_id')->ignore(optional($this->route('driver'))->id), Rule::exists('users', 'id')],
             'vehicle_make' => ['required', 'string', 'max:190'],
             'vehicle_model' => ['required', 'string', 'max:190'],
             'vehicle_colour' => ['required', 'string', 'max:50'],

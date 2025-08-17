@@ -75,6 +75,16 @@ class User extends Authenticatable
         );
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role?->name === 'Admin';
+    }
+
+    public function isDriver(): bool
+    {
+        return $this->role?->name === 'Driver';
+    }
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);

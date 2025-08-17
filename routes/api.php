@@ -16,6 +16,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/user', UserController::class);
         Route::post('/user/{user}/address', [AddressController::class, 'createUserAddress']);
         Route::patch('/address/{address}', [AddressController::class, 'update']);
+        Route::delete('/address/{address}', [AddressController::class, 'destroy']);
         Route::apiResource('/driver', DriverController::class);
         Route::apiResource('/customer', CustomerController::class);
         Route::post('/customer/{customer}/address', [AddressController::class, 'createCustomerAddress']);
