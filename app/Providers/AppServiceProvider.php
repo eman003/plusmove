@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Faker\AddressElement;
 use App\Models\V1\Package;
-use App\Utilities\LeastLoadedDriver;
+use App\Helper\LeastLoadedDriver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 

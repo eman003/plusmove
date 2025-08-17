@@ -1,0 +1,3496 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PlusMove Laravel API",
+        "description": "API documentation for PlusMove which handles deliveries.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/user/{id}/address": {
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Store a new address for a user",
+                "operationId": "a643b1cc13cf2891477074cbaa1ad77c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to store a new for the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 20
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Thomas Opperman"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "0574911775"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "Admin"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "mark.grobbelaar@example.com"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                },
+                                                "addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 39
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Home"
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "2839 Village Port"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "5362 Sandile Skyway Drive",
+                                                                "nullable": true
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Klarinet"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Pretoria"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "North West"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "1358"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "1 day ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The address line 1 field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "address_line_1": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address line 1 field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view the addresses for this user."
+                    },
+                    "404": {
+                        "description": "Not Found - The user with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/{id}/address": {
+            "post": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Store a new address for a customer",
+                "description": "Store a new address for a customer",
+                "operationId": "8973bf79cfde8fb9f831efaee4fcc160",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Miss Willemse"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "012-712-3489"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "norman79@example.org"
+                                                },
+                                                "joined": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                },
+                                                "customer_addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 71
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Home"
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "20288 Nomvula Meadows"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "8042 Gary Ridge Road",
+                                                                "nullable": true
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Roodepan"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Pietermaritzburg"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "Northern Cape"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "3539"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "1 day ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view this customer."
+                    },
+                    "404": {
+                        "description": "Not Found - The customer with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/address/{id}": {
+            "put": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Update an existing address",
+                "operationId": "9b6ac644a7c7e9ea13e840b4761b5f35",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the address to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Work",
+                                        "nullable": true
+                                    },
+                                    "address_line_1": {
+                                        "type": "string",
+                                        "example": "93087 Wild fig Lodge Ridge"
+                                    },
+                                    "address_2": {
+                                        "type": "string",
+                                        "example": "7010 Mduduzi Expressway Road",
+                                        "nullable": true
+                                    },
+                                    "suburb": {
+                                        "type": "string",
+                                        "example": "Parkhurst"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Mbombela (Nelspruit)"
+                                    },
+                                    "province": {
+                                        "type": "string",
+                                        "example": "Northern Cape"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "4974"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "South Africa"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Address updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 75
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Home"
+                                                },
+                                                "address_line_1": {
+                                                    "type": "string",
+                                                    "example": "93087 Wild fig Lodge Ridge"
+                                                },
+                                                "address_line_2": {
+                                                    "type": "string",
+                                                    "example": "7010 Mduduzi Expressway Road",
+                                                    "nullable": true
+                                                },
+                                                "suburb": {
+                                                    "type": "string",
+                                                    "example": "Parkhurst"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Mbombela (Nelspruit)"
+                                                },
+                                                "province": {
+                                                    "type": "string",
+                                                    "example": "Northern Cape"
+                                                },
+                                                "postal_code": {
+                                                    "type": "string",
+                                                    "example": "4974"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "South Africa"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The address line 1 field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "address_line_1": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address line 1 field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to update this address."
+                    },
+                    "404": {
+                        "description": "Not Found - The address with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Delete an address",
+                "operationId": "a18d7fe00a6326ba5110abd6ba19ec1c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the address to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Address deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The address with the specified ID was not found."
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to delete this address."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "b9b760991d94b179960cd7ddc93eedf2",
+                "requestBody": {
+                    "description": "Login credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|abcdef123456..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/v1/customer": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get a list of customers",
+                "operationId": "7cc29f7f3b6996121eff255ee8a5ca7f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 11
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Karoo Kookery (Pty) Ltd."
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "27 23 555 6789"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "format": "email",
+                                                        "example": "info@karookookery.co.za"
+                                                    },
+                                                    "joined": {
+                                                        "type": "string",
+                                                        "example": "5 hours ago"
+                                                    },
+                                                    "customer_addresses": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 81
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "School"
+                                                                },
+                                                                "address_line_1": {
+                                                                    "type": "string",
+                                                                    "example": "8422 Siyanda Bay"
+                                                                },
+                                                                "address_line_2": {
+                                                                    "type": "string",
+                                                                    "example": "2946 Mandy Gardens Street",
+                                                                    "nullable": true
+                                                                },
+                                                                "suburb": {
+                                                                    "type": "string",
+                                                                    "example": "Cashan"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string",
+                                                                    "example": "Bloemfontein"
+                                                                },
+                                                                "province": {
+                                                                    "type": "string",
+                                                                    "example": "Free State"
+                                                                },
+                                                                "postal_code": {
+                                                                    "type": "string",
+                                                                    "example": "9215"
+                                                                },
+                                                                "country": {
+                                                                    "type": "string",
+                                                                    "example": "South Africa"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "example": "1 day ago"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/customer?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/customer?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/customer"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view the customers."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Create a new customer",
+                "operationId": "63ac7cf676cd76eeb30e64f4af4ac216",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Karoo Kookery (Pty) Ltd."
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "27 23 555 6789"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "info@karookookery.co.za"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Miss Willemse"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "012-712-3489"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "norman79@example.org"
+                                                },
+                                                "joined": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                },
+                                                "customer_addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required. (and 2 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "phone": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to create a customer."
+                    },
+                    "404": {
+                        "description": "Not Found - The requested user was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/{id}": {
+            "get": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Get a single customer by ID",
+                "operationId": "aba9fdb513d2739249feff401c6798bf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 11
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Karoo Kookery (Pty) Ltd."
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "27 23 555 6789"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "info@karookookery.co.za"
+                                                },
+                                                "joined": {
+                                                    "type": "string",
+                                                    "example": "5 hours ago"
+                                                },
+                                                "customer_addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 81
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "School"
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "8422 Siyanda Bay"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "2946 Mandy Gardens Street",
+                                                                "nullable": true
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Cashan"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Bloemfontein"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "Free State"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "9215"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "1 day ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view this customer."
+                    },
+                    "404": {
+                        "description": "Not Found - The customer with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Update an existing customer",
+                "operationId": "e7f34a0d2fa8eef45d1e54b99b923c8c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Karoo Kookery (Pty) Ltd."
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "27 23 555 6789"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "info@karookookery.co.za"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Miss Willemse"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "012-712-3489"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "norman79@example.org"
+                                                },
+                                                "joined": {
+                                                    "type": "string",
+                                                    "example": "1 day ago"
+                                                },
+                                                "customer_addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The name field is required. (and 2 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "phone": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to update this customer."
+                    },
+                    "404": {
+                        "description": "Not Found - The customer with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Delete a customer",
+                "operationId": "9dfc788762aab040f73d666a480628ac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the customer to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Customer deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The customer with the specified ID was not found."
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to delete this customer."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get a list of drivers",
+                "operationId": "53f410c2ca36f22e3776d9902382baa7",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 8
+                                                    },
+                                                    "full_name": {
+                                                        "type": "string",
+                                                        "example": "Chantelle Murray",
+                                                        "nullable": true
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "Ekangala",
+                                                        "nullable": true
+                                                    },
+                                                    "vehicle_make": {
+                                                        "type": "string",
+                                                        "example": "Toyota"
+                                                    },
+                                                    "vehicle_model": {
+                                                        "type": "string",
+                                                        "example": "Tacoma"
+                                                    },
+                                                    "vehicle_colour": {
+                                                        "type": "string",
+                                                        "example": "Pearl White"
+                                                    },
+                                                    "vehicle_registration_number": {
+                                                        "type": "string",
+                                                        "example": "HV63PRGP"
+                                                    },
+                                                    "driver_license_expires_at": {
+                                                        "type": "string",
+                                                        "example": "2028-09-12"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/driver?page=1",
+                                                    "nullable": true
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/driver?page=1",
+                                                    "nullable": true
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1,
+                                                    "nullable": true
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "page": {
+                                                                "type": "integer",
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/driver"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 7,
+                                                    "nullable": true
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 7
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view the drivers."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Create a new driver",
+                "operationId": "72252bde624b693e7388e912b50d39c1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "vehicle_make",
+                                    "vehicle_model",
+                                    "vehicle_colour",
+                                    "vehicle_registration_number",
+                                    "driver_license_expires_at"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "vehicle_make": {
+                                        "type": "string",
+                                        "example": "Ford"
+                                    },
+                                    "vehicle_model": {
+                                        "type": "string",
+                                        "example": "Transit Custom"
+                                    },
+                                    "vehicle_colour": {
+                                        "type": "string",
+                                        "example": "Snow"
+                                    },
+                                    "vehicle_registration_number": {
+                                        "type": "string",
+                                        "example": "ND 409-717"
+                                    },
+                                    "driver_license_expires_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2030-08-16"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Driver created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Gideon Allie",
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Durban",
+                                                    "nullable": true
+                                                },
+                                                "vehicle_make": {
+                                                    "type": "string",
+                                                    "example": "Ford"
+                                                },
+                                                "vehicle_model": {
+                                                    "type": "string",
+                                                    "example": "Transit Custom"
+                                                },
+                                                "vehicle_colour": {
+                                                    "type": "string",
+                                                    "example": "Snow"
+                                                },
+                                                "vehicle_registration_number": {
+                                                    "type": "string",
+                                                    "example": "ND 409-717"
+                                                },
+                                                "driver_license_expires_at": {
+                                                    "type": "string",
+                                                    "example": "2030-08-16"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The user id field is required. (and 5 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "vehicle_make": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle make field is required."
+                                                    }
+                                                },
+                                                "vehicle_model": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle model field is required."
+                                                    }
+                                                },
+                                                "vehicle_colour": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle colour field is required."
+                                                    }
+                                                },
+                                                "vehicle_registration_number": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle registration number field is required."
+                                                    }
+                                                },
+                                                "driver_license_expires_at": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The driver license expires at field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to create a driver."
+                    },
+                    "404": {
+                        "description": "Not Found - The user with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/driver/{id}": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get a single driver by ID",
+                "operationId": "9eb112638fbcdd1c237ea582f1db98c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Gideon Allie",
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Durban",
+                                                    "nullable": true
+                                                },
+                                                "vehicle_make": {
+                                                    "type": "string",
+                                                    "example": "Ford"
+                                                },
+                                                "vehicle_model": {
+                                                    "type": "string",
+                                                    "example": "Transit Custom"
+                                                },
+                                                "vehicle_colour": {
+                                                    "type": "string",
+                                                    "example": "Snow"
+                                                },
+                                                "vehicle_registration_number": {
+                                                    "type": "string",
+                                                    "example": "ND 409-717"
+                                                },
+                                                "driver_license_expires_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2030-08-16"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view this driver."
+                    },
+                    "404": {
+                        "description": "Not Found - The driver with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Update an existing driver",
+                "operationId": "5736fd56bc84fbca251183a05a48d2bc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 6
+                                    },
+                                    "vehicle_make": {
+                                        "type": "string",
+                                        "example": "Ford"
+                                    },
+                                    "vehicle_model": {
+                                        "type": "string",
+                                        "example": "Transit Custom"
+                                    },
+                                    "vehicle_colour": {
+                                        "type": "string",
+                                        "example": "Snow"
+                                    },
+                                    "vehicle_registration_number": {
+                                        "type": "string",
+                                        "example": "ND 409-717"
+                                    },
+                                    "driver_license_expires_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2030-08-16"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Driver updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Gideon Allie",
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Durban",
+                                                    "nullable": true
+                                                },
+                                                "vehicle_make": {
+                                                    "type": "string",
+                                                    "example": "Ford"
+                                                },
+                                                "vehicle_model": {
+                                                    "type": "string",
+                                                    "example": "Transit Custom"
+                                                },
+                                                "vehicle_colour": {
+                                                    "type": "string",
+                                                    "example": "Snow"
+                                                },
+                                                "vehicle_registration_number": {
+                                                    "type": "string",
+                                                    "example": "ND 409-717"
+                                                },
+                                                "driver_license_expires_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2030-08-16"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The user id field is required. (and 5 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "vehicle_make": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle make field is required."
+                                                    }
+                                                },
+                                                "vehicle_model": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle model field is required."
+                                                    }
+                                                },
+                                                "vehicle_colour": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle colour field is required."
+                                                    }
+                                                },
+                                                "vehicle_registration_number": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The vehicle registration number field is required."
+                                                    }
+                                                },
+                                                "driver_license_expires_at": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The driver license expires at field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to update this driver."
+                    },
+                    "404": {
+                        "description": "Not Found - The driver with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Delete a driver",
+                "operationId": "3b27c5c711a8c66636cccb5a7cc74cba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the driver to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Driver deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Driver deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The driver with the specified ID was not found."
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to delete this driver."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/package": {
+            "get": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Get a list of packages",
+                "operationId": "cee6f2357f011d8ef6b9554e9eaa9d64",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 174
+                                                    },
+                                                    "customer": {
+                                                        "type": "string",
+                                                        "example": "Joseph Ltd"
+                                                    },
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "tracking_number": {
+                                                        "type": "string",
+                                                        "example": "329FE7BA-C64A-4360-A604-EFF5935B0E18"
+                                                    },
+                                                    "delivery_note": {
+                                                        "type": "string",
+                                                        "example": "Voluptatem asperiores culpa sunt et."
+                                                    },
+                                                    "delivered_at": {
+                                                        "type": "string",
+                                                        "example": "2025-08-15",
+                                                        "nullable": true
+                                                    },
+                                                    "cancelled_at": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "delivery_address": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 79
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Work",
+                                                                "nullable": true
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "692 Phoenix Zulu Residences"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "3706 Thandi Club Drive",
+                                                                "nullable": true
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Waverley"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Kimberley"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "Limpopo"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "4942"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "23 hours ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/package?page=1",
+                                                    "nullable": true
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/package?page=12",
+                                                    "nullable": true
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/package?page=2",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1,
+                                                    "nullable": true
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "page": {
+                                                                "type": "integer",
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/package"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 15,
+                                                    "nullable": true
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 173
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view the packages."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Create a new package",
+                "operationId": "76c7182b3233c5d3e3f078648fbf32ac",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "customer_id",
+                                    "address_id",
+                                    "scheduled_for"
+                                ],
+                                "properties": {
+                                    "customer_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "address_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "scheduled_for": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-08-13"
+                                    },
+                                    "delivery_note": {
+                                        "type": "string",
+                                        "example": "Optional delivery notes",
+                                        "nullable": true
+                                    },
+                                    "delivered_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "nullable": true
+                                    },
+                                    "cancelled_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Package created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "customer": {
+                                                    "type": "string",
+                                                    "example": "Mashigo Ltd"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tracking_number": {
+                                                    "type": "string",
+                                                    "example": "CD6FF301-5E01-4E5F-AE57-751070462B1C"
+                                                },
+                                                "delivery_note": {
+                                                    "type": "string",
+                                                    "example": "Fuga placeat qui sint."
+                                                },
+                                                "delivered_at": {
+                                                    "type": "string",
+                                                    "example": "2025-08-13",
+                                                    "nullable": true
+                                                },
+                                                "cancelled_at": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "delivery_address": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 63
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "School",
+                                                            "nullable": true
+                                                        },
+                                                        "address_line_1": {
+                                                            "type": "string",
+                                                            "example": "4909 Willow Lane Gardens"
+                                                        },
+                                                        "address_line_2": {
+                                                            "type": "string",
+                                                            "example": "9138 De Lange Landing Road",
+                                                            "nullable": true
+                                                        },
+                                                        "suburb": {
+                                                            "type": "string",
+                                                            "example": "Mangaung"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "East London"
+                                                        },
+                                                        "province": {
+                                                            "type": "string",
+                                                            "example": "North West"
+                                                        },
+                                                        "postal_code": {
+                                                            "type": "string",
+                                                            "example": "7429"
+                                                        },
+                                                        "country": {
+                                                            "type": "string",
+                                                            "example": "South Africa"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": "23 hours ago"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The customer id field is required. (and 2 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "customer_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The customer id field is required."
+                                                    }
+                                                },
+                                                "address_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address id field is required."
+                                                    }
+                                                },
+                                                "scheduled_for": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The scheduled for field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to create a package."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/package/{id}": {
+            "get": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Get a single package by ID",
+                "operationId": "4ac6c30e59b4fa1ad970f125679877a9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the package to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "customer": {
+                                                    "type": "string",
+                                                    "example": "Mashigo Ltd"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tracking_number": {
+                                                    "type": "string",
+                                                    "example": "CD6FF301-5E01-4E5F-AE57-751070462B1C"
+                                                },
+                                                "delivery_note": {
+                                                    "type": "string",
+                                                    "example": "Fuga placeat qui sint."
+                                                },
+                                                "delivered_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-08-13",
+                                                    "nullable": true
+                                                },
+                                                "cancelled_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "delivery_address": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 63
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "School",
+                                                            "nullable": true
+                                                        },
+                                                        "address_line_1": {
+                                                            "type": "string",
+                                                            "example": "4909 Willow Lane Gardens"
+                                                        },
+                                                        "address_line_2": {
+                                                            "type": "string",
+                                                            "example": "9138 De Lange Landing Road",
+                                                            "nullable": true
+                                                        },
+                                                        "suburb": {
+                                                            "type": "string",
+                                                            "example": "Mangaung"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "East London"
+                                                        },
+                                                        "province": {
+                                                            "type": "string",
+                                                            "example": "North West"
+                                                        },
+                                                        "postal_code": {
+                                                            "type": "string",
+                                                            "example": "7429"
+                                                        },
+                                                        "country": {
+                                                            "type": "string",
+                                                            "example": "South Africa"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": "23 hours ago"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view this package."
+                    },
+                    "404": {
+                        "description": "Not Found - The package with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Update an existing package",
+                "operationId": "66dbdee562e3db5c2a0cb2cf8cc9cdad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the package to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "address_id": {
+                                        "type": "integer",
+                                        "example": 63
+                                    },
+                                    "status": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "delivery_note": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "delivered_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "nullable": true
+                                    },
+                                    "cancelled_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Package updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "customer": {
+                                                    "type": "string",
+                                                    "example": "Mashigo Ltd"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "tracking_number": {
+                                                    "type": "string",
+                                                    "example": "CD6FF301-5E01-4E5F-AE57-751070462B1C"
+                                                },
+                                                "delivery_note": {
+                                                    "type": "string",
+                                                    "example": "Fuga placeat qui sint."
+                                                },
+                                                "delivered_at": {
+                                                    "type": "string",
+                                                    "example": "2025-08-13",
+                                                    "nullable": true
+                                                },
+                                                "cancelled_at": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "delivery_address": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 63
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "School",
+                                                            "nullable": true
+                                                        },
+                                                        "address_line_1": {
+                                                            "type": "string",
+                                                            "example": "4909 Willow Lane Gardens"
+                                                        },
+                                                        "address_line_2": {
+                                                            "type": "string",
+                                                            "example": "9138 De Lange Landing Road",
+                                                            "nullable": true
+                                                        },
+                                                        "suburb": {
+                                                            "type": "string",
+                                                            "example": "Mangaung"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "East London"
+                                                        },
+                                                        "province": {
+                                                            "type": "string",
+                                                            "example": "North West"
+                                                        },
+                                                        "postal_code": {
+                                                            "type": "string",
+                                                            "example": "7429"
+                                                        },
+                                                        "country": {
+                                                            "type": "string",
+                                                            "example": "South Africa"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": "23 hours ago"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The address id field is required. (and 1 more error)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "address_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address id field is required."
+                                                    }
+                                                },
+                                                "status": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The status field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to update this package."
+                    },
+                    "404": {
+                        "description": "Not Found - The package with the specified ID was not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Delete a package",
+                "operationId": "83b031e86e4381660aa9e912365ae9e9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the package to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Package deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Package deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - The package with the specified ID was not found."
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to delete this package."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/report": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Generate a daily report",
+                "operationId": "5522256201988ad9cc04446dfe925c10",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-08-17"
+                                                    },
+                                                    "driver_name": {
+                                                        "type": "string",
+                                                        "example": "Contact Roux",
+                                                        "nullable": true
+                                                    },
+                                                    "vehicle": {
+                                                        "type": "string",
+                                                        "example": "Hyundai, Staria Panel Van"
+                                                    },
+                                                    "delivered": {
+                                                        "type": "integer",
+                                                        "example": 6
+                                                    },
+                                                    "returned": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "total": {
+                                                        "type": "integer",
+                                                        "example": 7
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/report?page=1",
+                                                    "nullable": true
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/report?page=1",
+                                                    "nullable": true
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "page": {
+                                                                "type": "integer",
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://plusmove.test/api/v1/report"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 7
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 7
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to view this report."
+                    }
+                }
+            }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of users",
+                "operationId": "069866150be4b975d248c35627c94fdb",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "full_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "phone_number": {
+                                                        "type": "string"
+                                                    },
+                                                    "role": {
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "addresses": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "nullable": true
+                                                                },
+                                                                "address_line_1": {
+                                                                    "type": "string"
+                                                                },
+                                                                "address_line_2": {
+                                                                    "type": "string",
+                                                                    "nullable": true
+                                                                },
+                                                                "suburb": {
+                                                                    "type": "string"
+                                                                },
+                                                                "city": {
+                                                                    "type": "string"
+                                                                },
+                                                                "province": {
+                                                                    "type": "string"
+                                                                },
+                                                                "postal_code": {
+                                                                    "type": "string"
+                                                                },
+                                                                "country": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/v1/user?page=1",
+                                                    "nullable": true
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/v1/user?page=3",
+                                                    "nullable": true
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/v1/user?page=2",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer"
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "nullable": true
+                                                },
+                                                "last_page": {
+                                                    "type": "integer"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "page": {
+                                                                "type": "integer",
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer"
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "nullable": true
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to access this resource."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user",
+                "operationId": "14ffc1a2beec11e409c05b16801dd1c1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "phone_number",
+                                    "email",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "0711234567"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "full_name": {
+                                                    "type": "string"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                },
+                                                "addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The first name field is required."
+                                                    }
+                                                },
+                                                "last_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The last name field is required."
+                                                    }
+                                                },
+                                                "phone_number": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone number field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                },
+                                                "role_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The role id field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to create a user."
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a single user by ID",
+                "operationId": "46a89c61ee453da0462c40d3531c722b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Contact Roux"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "0363079825"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "Admin"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "madonsela.john@example.org"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "23 hours ago"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "7 hours ago"
+                                                },
+                                                "addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Home"
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "983 Lush Dale"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "7547 Johann Glens Street"
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Mangaung"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Mbombela (Nelspruit)"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "Mpumalanga"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "4187"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "23 hours ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to access this user's details."
+                    },
+                    "404": {
+                        "description": "Not Found - The user with the specified ID was not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update an existing user",
+                "operationId": "020342b704ebc0573ecb111fe176cafc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Claudia"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Jones"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "+27(18)8323988"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "maluleka.francis@example.org"
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Claudia Jones"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "+27(18)8323988"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "Driver"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "maluleka.francis@example.org"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "23 hours ago"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "23 hours ago"
+                                                },
+                                                "addresses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 11
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "School"
+                                                            },
+                                                            "address_line_1": {
+                                                                "type": "string",
+                                                                "example": "8949 Xhosa Avenue Heights"
+                                                            },
+                                                            "address_line_2": {
+                                                                "type": "string",
+                                                                "example": "6801 Marais Squares Road"
+                                                            },
+                                                            "suburb": {
+                                                                "type": "string",
+                                                                "example": "Willows"
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "Emalahleni (Witbank)"
+                                                            },
+                                                            "province": {
+                                                                "type": "string",
+                                                                "example": "Gauteng"
+                                                            },
+                                                            "postal_code": {
+                                                                "type": "string",
+                                                                "example": "0935"
+                                                            },
+                                                            "country": {
+                                                                "type": "string",
+                                                                "example": "South Africa"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "23 hours ago"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The first name field is required. (and 4 more errors)"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The first name field is required."
+                                                    }
+                                                },
+                                                "last_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The last name field is required."
+                                                    }
+                                                },
+                                                "phone_number": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone number field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                },
+                                                "role_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The role id field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to update this user."
+                    },
+                    "404": {
+                        "description": "Not Found - The user with the specified ID was not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete a user",
+                "operationId": "0f3896a667cd077c45e22d0046c68479",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "403": {
+                        "description": "Forbidden - The user does not have permission to delete this user."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Enter token in format (Bearer <token>)",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Addresses",
+            "description": "Addresses"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Customers",
+            "description": "Customers"
+        },
+        {
+            "name": "Drivers",
+            "description": "Drivers"
+        },
+        {
+            "name": "Packages",
+            "description": "Packages"
+        },
+        {
+            "name": "Reports",
+            "description": "Reports"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        }
+    ]
+}

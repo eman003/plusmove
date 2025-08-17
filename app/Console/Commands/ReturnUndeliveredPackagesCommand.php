@@ -24,32 +24,40 @@ class ReturnUndeliveredPackagesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Packages not delivered by the end of the day should be marked as returns and included in the daily reports for accountability.';
+    protected $description = 'Packages not delivered by the end of the day should be marked as returns and included in the daily reports.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        Package::whereIn('status', [DeliveryStatusEnum::NEW, DeliveryStatusEnum::OUT_FOR_DELIVERY])
-            ->update(['status' => DeliveryStatusEnum::RETURNED]);
+        $this->returnUndeliveredPackages();
 
         $this->generateReport();
     }
 
-    private function generateReport(): void
+    /*
+     * Get all packages that were scheduled for today and have not been delivered
+     * and mark them as returned
+     */
+    private function returnUndeliveredPackages(): void
     {
         Package::whereDate('scheduled_for', now())
             ->where('status', '!=', DeliveryStatusEnum::DELIVERED)
             ->update(['status' => DeliveryStatusEnum::RETURNED]);
+    }
 
+    /*
+     * Generate a daily report for each driver
+     */
+    private function generateReport(): void
+    {
         $today = now()->toDateString();
 
-        Driver::with(['user:id,first_name,last_name'])->withCount([
+        Driver::withCount([
             'packages as packages_returned_count' => fn ($q) => $q->whereDate('scheduled_for', $today)->where('status', DeliveryStatusEnum::RETURNED),
             'packages as delivered_packages_count' => fn ($q) => $q->whereDate('scheduled_for', $today)->where('status', DeliveryStatusEnum::DELIVERED),
-        ])->orderBy('packages_returned_count', 'DESC')
-            ->cursor()
+        ])->cursor()
             ->each(fn ($d) => Report::create([
                 'driver_id' => $d->id,
                 'packages_returned' => $d->packages_returned_count,
