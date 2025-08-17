@@ -56,7 +56,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->cascade()->delete();
+        $user->tokens()->delete();
+        $user->addresses()->delete();
+        $user->delete();
 
         return response()->json([
             'message' => 'User deleted successfully'

@@ -17,8 +17,6 @@ class CustomerController extends Controller
     {
         $customers = Customer::with('addresses')->latest('id')->paginate(15)->withQueryString();
 
-        return $customers;
-
         return CustomerResource::collection($customers);
     }
 
@@ -55,6 +53,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        $customer->addresses()->delete();
         $customer->delete();
 
         return response()->json([
