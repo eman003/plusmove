@@ -108,7 +108,3 @@ This API uses **L5-Swagger** for automatic API documentation. You can generate a
 ### **7\. Reports**
 
 * ```GET /api/v1/report```: Get a report of deliveries and returns.
-
-## **License**
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
