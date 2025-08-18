@@ -34,39 +34,12 @@ class UserController extends Controller
      * @OA\Property(
      * property="data",
      * type="array",
-     * @OA\Items(
-     * @OA\Property(property="id", type="integer"),
-     * @OA\Property(property="full_name", type="string"),
-     * @OA\Property(property="phone_number", type="string"),
-     * @OA\Property(property="role", type="string"),
-     * @OA\Property(property="email", type="string"),
-     * @OA\Property(property="created_at", type="string"),
-     * @OA\Property(property="updated_at", type="string"),
-     * @OA\Property(
-     * property="addresses",
-     * type="array",
-     * @OA\Items(
-     * @OA\Property(property="id", type="integer"),
-     * @OA\Property(property="name", type="string", nullable=true),
-     * @OA\Property(property="address_line_1", type="string"),
-     * @OA\Property(property="address_line_2", type="string", nullable=true),
-     * @OA\Property(property="suburb", type="string"),
-     * @OA\Property(property="city", type="string"),
-     * @OA\Property(property="province", type="string"),
-     * @OA\Property(property="postal_code", type="string"),
-     * @OA\Property(property="country", type="string"),
-     * @OA\Property(property="created_at", type="string"),
-     * )
-     * )
-     * )
+     * @OA\Items(ref="#/components/schemas/User")
      * ),
      * @OA\Property(
      * property="links",
      * type="object",
-     * @OA\Property(property="first", type="string", nullable=true, example="http://localhost/api/v1/user?page=1"),
-     * @OA\Property(property="last", type="string", nullable=true, example="http://localhost/api/v1/user?page=3"),
-     * @OA\Property(property="prev", type="string", nullable=true),
-     * @OA\Property(property="next", type="string", nullable=true, example="http://localhost/api/v1/user?page=2"),
+     * ref="#/components/schemas/PaginationLinks"
      * ),
      * @OA\Property(
      * property="meta",
@@ -116,14 +89,7 @@ class UserController extends Controller
      * tags={"Users"},
      * @OA\RequestBody(
      * required=true,
-     * @OA\JsonContent(
-     * required={"first_name","last_name","phone_number","email","role_id"},
-     * @OA\Property(property="first_name", type="string", example="John"),
-     * @OA\Property(property="last_name", type="string", example="Doe"),
-     * @OA\Property(property="phone_number", type="string", example="0711234567"),
-     * @OA\Property(property="email", type="string", format="email", example="john.doe@example.com"),
-     * @OA\Property(property="role_id", type="integer", example=1),
-     * )
+     * @OA\JsonContent(ref="#/components/schemas/UserRequest")
      * ),
      * @OA\Response(
      * response=201,
@@ -131,33 +97,14 @@ class UserController extends Controller
      * @OA\JsonContent(
      * @OA\Property(
      * property="data",
-     * type="object",
-     * @OA\Property(property="id", type="integer"),
-     * @OA\Property(property="full_name", type="string"),
-     * @OA\Property(property="phone_number", type="string"),
-     * @OA\Property(property="role", type="string"),
-     * @OA\Property(property="email", type="string"),
-     * @OA\Property(property="created_at", type="string"),
-     * @OA\Property(property="updated_at", type="string"),
-     * @OA\Property(property="addresses", type="array", @OA\Items(type="object")),
+     * ref="#/components/schemas/User"
      * )
      * )
      * ),
      * @OA\Response(
      * response=422,
      * description="Validation errors",
-     * @OA\JsonContent(
-     * @OA\Property(property="message", type="string", example="The given data was invalid."),
-     * @OA\Property(
-     * property="errors",
-     * type="object",
-     * @OA\Property(property="first_name", type="array", @OA\Items(type="string", example="The first name field is required.")),
-     * @OA\Property(property="last_name", type="array", @OA\Items(type="string", example="The last name field is required.")),
-     * @OA\Property(property="phone_number", type="array", @OA\Items(type="string", example="The phone number field is required.")),
-     * @OA\Property(property="email", type="array", @OA\Items(type="string", example="The email field is required.")),
-     * @OA\Property(property="role_id", type="array", @OA\Items(type="string", example="The role id field is required.")),
-     * )
-     * )
+     * @OA\JsonContent(ref="#/components/schemas/UserValidationErrors")
      * ),
      * @OA\Response(
      * response=403,
@@ -199,28 +146,7 @@ class UserController extends Controller
      * @OA\Property(
      * property="data",
      * type="object",
-     * @OA\Property(property="id", type="integer", example=1),
-     * @OA\Property(property="full_name", type="string", example="Contact Roux"),
-     * @OA\Property(property="phone_number", type="string", example="0363079825"),
-     * @OA\Property(property="role", type="string", example="Admin"),
-     * @OA\Property(property="email", type="string", example="madonsela.john@example.org"),
-     * @OA\Property(property="created_at", type="string", example="23 hours ago"),
-     * @OA\Property(property="updated_at", type="string", example="7 hours ago"),
-     * @OA\Property(
-     * property="addresses",
-     * type="array",
-     * @OA\Items(
-     * @OA\Property(property="id", type="integer", example=1),
-     * @OA\Property(property="name", type="string", example="Home"),
-     * @OA\Property(property="address_line_1", type="string", example="983 Lush Dale"),
-     * @OA\Property(property="address_line_2", type="string", example="7547 Johann Glens Street"),
-     * @OA\Property(property="suburb", type="string", example="Mangaung"),
-     * @OA\Property(property="city", type="string", example="Mbombela (Nelspruit)"),
-     * @OA\Property(property="province", type="string", example="Mpumalanga"),
-     * @OA\Property(property="postal_code", type="string", example="4187"),
-     * @OA\Property(property="country", type="string", example="South Africa"),
-     * @OA\Property(property="created_at", type="string", example="23 hours ago")
-     * )
+     * ref="#/components/schemas/User"
      * )
      * )
      * )
@@ -256,13 +182,7 @@ class UserController extends Controller
      * ),
      * @OA\RequestBody(
      * required=true,
-     * @OA\JsonContent(
-     * @OA\Property(property="first_name", type="string", example="Claudia"),
-     * @OA\Property(property="last_name", type="string", example="Jones"),
-     * @OA\Property(property="phone_number", type="string", example="+27(18)8323988"),
-     * @OA\Property(property="email", type="string", format="email", example="maluleka.francis@example.org"),
-     * @OA\Property(property="role_id", type="integer", example=1)
-     * )
+     * @OA\JsonContent(ref="#/components/schemas/UserRequest")
      * ),
      * @OA\Response(
      * response=200,
@@ -271,48 +191,14 @@ class UserController extends Controller
      * @OA\Property(
      * property="data",
      * type="object",
-     * @OA\Property(property="id", type="integer", example=6),
-     * @OA\Property(property="full_name", type="string", example="Claudia Jones"),
-     * @OA\Property(property="phone_number", type="string", example="+27(18)8323988"),
-     * @OA\Property(property="role", type="string", example="Driver"),
-     * @OA\Property(property="email", type="string", example="maluleka.francis@example.org"),
-     * @OA\Property(property="created_at", type="string", example="23 hours ago"),
-     * @OA\Property(property="updated_at", type="string", example="23 hours ago"),
-     * @OA\Property(
-     * property="addresses",
-     * type="array",
-     * @OA\Items(
-     * type="object",
-     * @OA\Property(property="id", type="integer", example=11),
-     * @OA\Property(property="name", type="string", example="School"),
-     * @OA\Property(property="address_line_1", type="string", example="8949 Xhosa Avenue Heights"),
-     * @OA\Property(property="address_line_2", type="string", example="6801 Marais Squares Road"),
-     * @OA\Property(property="suburb", type="string", example="Willows"),
-     * @OA\Property(property="city", type="string", example="Emalahleni (Witbank)"),
-     * @OA\Property(property="province", type="string", example="Gauteng"),
-     * @OA\Property(property="postal_code", type="string", example="0935"),
-     * @OA\Property(property="country", type="string", example="South Africa"),
-     * @OA\Property(property="created_at", type="string", example="23 hours ago")
-     * )
-     * )
+     * ref="#/components/schemas/User"
      * )
      * )
      * ),
      * @OA\Response(
      * response=422,
      * description="Validation errors",
-     * @OA\JsonContent(
-     * @OA\Property(property="message", type="string", example="The first name field is required. (and 4 more errors)"),
-     * @OA\Property(
-     * property="errors",
-     * type="object",
-     * @OA\Property(property="first_name", type="array", @OA\Items(type="string", example="The first name field is required.")),
-     * @OA\Property(property="last_name", type="array", @OA\Items(type="string", example="The last name field is required.")),
-     * @OA\Property(property="phone_number", type="array", @OA\Items(type="string", example="The phone number field is required.")),
-     * @OA\Property(property="email", type="array", @OA\Items(type="string", example="The email field is required.")),
-     * @OA\Property(property="role_id", type="array", @OA\Items(type="string", example="The role id field is required."))
-     * )
-     * )
+     * @OA\JsonContent(ref="#/components/schemas/UserValidationErrors")
      * ),
      * @OA\Response(
      * response=403,
